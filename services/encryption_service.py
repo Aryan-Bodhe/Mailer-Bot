@@ -6,7 +6,8 @@ load_dotenv()
 
 class EncryptionService:
     def __init__(self):
-        self.fernet = Fernet(os.environ.get('FERNET_KEY').encode())
+        # self.fernet = Fernet(os.environ.get('FERNET_KEY').encode())
+        self.fernet = Fernet(st.secrets['fernet']['fernetKey'].encode())
 
     def encrypt(self, data: str):
         encrypted_data = self.fernet.encrypt(data.encode()).decode()
