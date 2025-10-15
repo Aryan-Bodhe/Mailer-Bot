@@ -43,13 +43,16 @@ else:
     total = st.session_state["total"]
     failed_mails = st.session_state["failed_mails"]
 
-if st.button("Send More Mails"):
-    creds = st.session_state['credentials']
-    st.session_state.clear()
-    st.session_state['credentials'] = creds
-    st.switch_page("pages/0_Upload.py")
+with st.container(width=300, horizontal_alignment='center'):
+        col1, col2, _ = st.columns([3,1.6,1])
+        with col1:
+           if st.button("Send More Mails"):
+            creds = st.session_state['credentials']
+            st.session_state.clear()
+            st.session_state['credentials'] = creds
+            st.switch_page("pages/0_Upload.py")
 
-# clear everything and go to home page
-if st.button("Logout"):
-    st.session_state.clear()
-    st.switch_page('pages/3_Logout_Screen.py')
+        with col2:    
+            if st.button("Logout"):
+                st.session_state.clear()
+                st.switch_page('pages/3_Logout_Screen.py')

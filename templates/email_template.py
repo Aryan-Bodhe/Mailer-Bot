@@ -2,7 +2,7 @@ EMAIL_TEMPLATE = """Dear {student_name},
 
 Please find your marks for the recent {course_name} examination.
 
-{exam_name}: {marks}.
+{marks_block}.
 
 Best Regards,
 {professor_name}.

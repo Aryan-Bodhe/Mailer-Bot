@@ -57,8 +57,6 @@ def registration_screen():
 
                         st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd)
 
-                        # cookies = controller.getAll()
-                        # st.write(cookies)
                         st.success('Registration Successful!')
                         time.sleep(1)
                         st.switch_page('pages/0_Upload.py')

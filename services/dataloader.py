@@ -3,7 +3,7 @@ import pandas as pd
 class DataLoader():
     def __init__(self, excel_file):        
         self.data = pd.read_excel(excel_file)
-        self.data.dropna()
+        self.data.dropna(how='all')
         self.data.columns = self.data.columns.str.strip()
         self.validate_sheet()
 
@@ -13,6 +13,8 @@ class DataLoader():
             raise pd.errors.DataError("'Mail' or 'Name' column missing in sheet.")
         
     def get_student_exam_data(self, exam_name: str):
+        if exam_name.strip().lower() == 'all exams':
+            return self.data[['Mail', 'Name'] + self.get_exam_names()]
         if exam_name not in self.data.columns:
             raise pd.errors.InvalidColumnName(f'Column {exam_name} not found in sheet.')
         return pd.concat([self.data['Mail'], self.data['Name'], self.data[exam_name]], axis=1)
