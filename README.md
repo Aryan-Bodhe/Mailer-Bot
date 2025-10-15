@@ -1,4 +1,3 @@
-
 # Mailer-Bot
 
 **Mailer-Bot** is a Streamlit-based application that allows professors to securely send personalized exam marks to students via email. It supports multiple exams, Gmail authentication via App Passwords, and secure storage of sensitive credentials using encryption. The backend is powered by Firebase Firestore, and the app is fully deployable on Streamlit Cloud.
