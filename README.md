@@ -18,7 +18,6 @@
 ## Demo
 
 ![Screenshot Placeholder](docs/screenshot.png)  
-*Replace with actual screenshot of your Streamlit app.*
 
 ---
 
@@ -135,4 +134,5 @@ Mailer-Bot/
 ## Contact
 
 For any issues or questions, reach out to the author: Aryan Bodhe
+
 
