@@ -23,7 +23,6 @@ if 'credentials' not in st.session_state:
     st.session_state['credentials'] = None
 
 _, center, _ = st.columns([1,4,1])
-      
 
 def registration_screen():
     with center:
@@ -38,28 +37,31 @@ def registration_screen():
                 if st.form_submit_button('Register'):
                     if not name or not user_email or not app_pwd:
                         st.warning('Please fill out all fields.')
-                        st.stop()
 
-                    if MailerService.validate_credentials(email=user_email, app_pwd=app_pwd):
-                        ms = MailerService(sender_email=user_email, app_password=app_pwd)
-                        st.session_state['mailer_service'] = ms
-                        app_password_encrypted = encryption_service.encrypt(app_pwd)
-                        try:
-                            firestore.add_user(email=user_email, name=name, app_password=app_password_encrypted)
-                        except UserAlreadyExists:
-                            st.error("User exist what now?")
-                        except Exception as e:
-                            st.error(f'Some Error occured: {e}. Try reloading the page.')
-                            st.stop()
+                    else:
+                        if MailerService.validate_credentials(email=user_email, app_pwd=app_pwd):
+                            ms = MailerService(sender_email=user_email, app_password=app_pwd)
+                            st.session_state['mailer_service'] = ms
+                            app_password_encrypted = encryption_service.encrypt(app_pwd)
+                            try:
+                                firestore.add_user(email=user_email, name=name, app_password=app_password_encrypted)
+                            except UserAlreadyExists:
+                                st.error("User already exists.")
+                            except Exception as e:
+                                st.error(f'Some Error occured: {e}. Try reloading the page.')
+                                st.stop()
 
-                        encrypted_email = encryption_service.encrypt(user_email)
-                        controller.set('user_email', encrypted_email)
+                            encrypted_email = encryption_service.encrypt(user_email)
+                            controller.set('user_email', encrypted_email)
 
-                        st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd)
+                            st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd)
 
-                        st.success('Registration Successful!')
-                        time.sleep(1)
-                        st.switch_page('pages/0_Upload.py')
+                            st.success('Registration Successful!')
+                            time.sleep(1)
+                            st.switch_page('pages/0_Upload.py')
+                        else:
+                            st.error('Invalid Email or App Password.')
+
 
 
 controller = CookieController()
@@ -67,7 +69,6 @@ encryption_service: EncryptionService = st.session_state['encryption_service']
 firestore: Firestore = st.session_state['firestore']
 
 encrypted_email = controller.get('user_email')
-
 if encrypted_email:
     user_email = encryption_service.decrypt(encrypted_email)
     try:

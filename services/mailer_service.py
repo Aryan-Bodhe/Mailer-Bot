@@ -23,7 +23,6 @@ class MailerService:
             )
             return True
         except Exception as e:
-            print(e)
             return False
             
     def get_marks_block(self, marks_dict: dict):
