@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 
