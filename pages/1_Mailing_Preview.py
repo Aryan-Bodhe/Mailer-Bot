@@ -27,12 +27,11 @@ left_col, center_col, right_col = st.columns([1.2,5,2.5])
 dl: DataLoader = st.session_state['dataloader_instance']
 
 if 'mailer_service' not in st.session_state or st.session_state['mailer_service'] is None:
-    st.warning(str(creds))
     try:
         ms: MailerService = MailerService(sender_email=creds.email, app_password=encryption_service.decrypt(creds.app_password))
         st.session_state['mailer_service'] = ms
     except Exception:
-        st.error("Credentials Error.")
+        st.error("Credentials Error. Please reload the page.")
         st.stop()
 else: 
     ms: MailerService = st.session_state['mailer_service']
