@@ -54,7 +54,7 @@ def registration_screen():
                             encrypted_email = encryption_service.encrypt(user_email)
                             controller.set('user_email', encrypted_email)
 
-                            st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd)
+                            st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd_encrypted)
 
                             st.success('Registration Successful!')
                             time.sleep(1)
@@ -72,8 +72,8 @@ encrypted_email = controller.get('user_email')
 if encrypted_email:
     user_email = encryption_service.decrypt(encrypted_email)
     try:
-        app_pwd, name = firestore.get_user_app_password_and_name(user_email)
-        st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd)
+        app_pwd_encrypted, name = firestore.get_user_app_password_and_name(user_email)
+        st.session_state['credentials'] = UserCredentials(name=name, email=user_email, app_password=app_pwd_encrypted)
         st.success("User Auto Login Successful.")
         time.sleep(1)
         st.switch_page('pages/0_Upload.py')
