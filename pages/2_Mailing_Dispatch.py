@@ -16,7 +16,7 @@ if "mail_sent" not in st.session_state:
     with st.container(horizontal_alignment='center', vertical_alignment='center'):
         with st.spinner("Sending mails...", width=300):
             success, total, failed_mails = ms.send_bulk(
-                student_exam_data, course_name, exam_name, professor_name
+                student_exam_data, course_name, professor_name
             )
             # store results in session
             st.session_state["mail_sent"] = True
